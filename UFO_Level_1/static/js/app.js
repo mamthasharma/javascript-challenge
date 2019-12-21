@@ -32,3 +32,20 @@ button.on("click", function() {
   // that was entered in the form
   d3.select("h1>span").text(inputValue);
 });
+tableData=[];
+newTable(tableData);
+// Use a date form in your HTML document and write JavaScript code that will listen for events 
+// and search through the date/time column to find rows that match user input.
+// Select the button
+var button = d3.select("#filter-btn");
+button.on("click", function() {
+  // Select the input element and get the raw HTML node
+  var inputElement = d3.select("#datetime");
+  // Get the value property of the input element
+  var inputValue = inputElement.property("value");
+//   console.log(inputValue);
+ var newData = tableData.filter(ufoSight => ufoSight.datetime === inputValue);
+    console.log(newData);
+newTable(newData);
+  
+});
