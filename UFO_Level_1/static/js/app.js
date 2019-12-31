@@ -1,11 +1,16 @@
 // from data.js
 var tableData = data;
-
-console.log(data);
-
 var tbody= d3.select("tbody");
+console.log(data);
+// Reset table by setting html to " "
+function resetTable(){
+  tbody.html("");
+}
+//reading data to table with additional row and data using object.entries to get the key value pai
+function createTable(data){
 
-data.forEach((sighting)=>{
+  resetTable();
+  data.forEach((sighting)=>{
     console.log(sighting);
     var row = tbody.append("tr");
     Object.entries(sighting).forEach(([key, value])=> {
@@ -14,38 +19,18 @@ data.forEach((sighting)=>{
     cell.text(value);
 });
 });
-// newTable(tableData);
-var button = d3.select("#filter-btn");
-
-button.on("click", function() {
-
+}
+//using the date input filtering tableData on the date
+function filteredTable(){
   // Select the input element and get the raw HTML node
-  var inputElement = d3.select("#datetime");
-
-  // Get the value property of the input element
-  var inputValue = inputElement.property("value");
-
-  console.log(inputValue);
-  var newData = tableData.filter(ufoSight => ufoSight.datetime === inputValue);
-  console.log(newData);
-  // Set the span tag in the h1 element to the text
-  // that was entered in the form
-  d3.select("h1>span").text(inputValue);
-});
-tableData=[];
-newTable(tableData);
-// Use a date form in your HTML document and write JavaScript code that will listen for events 
-// and search through the date/time column to find rows that match user input.
-// Select the button
-var button = d3.select("#filter-btn");
-button.on("click", function() {
-  // Select the input element and get the raw HTML node
-  var inputElement = d3.select("#datetime");
-  // Get the value property of the input element
-  var inputValue = inputElement.property("value");
-//   console.log(inputValue);
+ var inputElement = d3.select("#datetime");
+ // Get the value property of the input element
+ var inputValue = inputElement.property("value");
  var newData = tableData.filter(ufoSight => ufoSight.datetime === inputValue);
-    console.log(newData);
-newTable(newData);
-  
-});
+ //call createTable with the data from filtered list to populate sighting data
+ createTable(newData);
+}
+//on clicking filter table funtion filteredTable is called 
+d3.selectAll("#filter-btn").on("click",filteredTable);
+// Default if no button clicked
+createTable(tableData);
